@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Not Found Page</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+
+  <body>
+    <header>
+      <div class="logo"><span>DataPulse</span></div>
+      <div class="menu-toggle" onclick="toggleMenu()">
+        <img src="./images/arrow-down.png" alt="toggleMenu" />
+      </div>
+      <nav id="nav-menu">
+        <a href="#">Home</a>
+        <a href="#">About Us</a>
+        <a href="#">Our Teams</a>
+        <a href="#">Blog</a>
+        <a href="#">Support</a>
+        <a href="#" class="active">Sign Up</a>
+        <a href="#">Sign In</a>
+      </nav>
+    </header>
+
+    <div class="row">
+      <div class="col col-1">
+        <img
+          src="./images/Not found page.png"
+          alt="a tired man with 404 logo"
+        />
+      </div>
+
+      <div class="col col-2">
+        <h1>Hmm, looks like you've wandered off the digital path</h1>
+        <p>
+          Even the most experienced travelers can stumble upon dead ends. Return
+          to the homepage or explore further.
+        </p>
+
+        <div class="btn-group">
+          <button class="btn-1" onclick="location.href='#'">
+            Back to Home
+          </button>
+          <button class="btn-2" onclick="location.href='#'">
+            Visit Help Center
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function toggleMenu() {
+        const nav = document.getElementById("nav-menu");
+        nav.classList.toggle("open");
+      }
+    </script>
+  </body>
+</html>
