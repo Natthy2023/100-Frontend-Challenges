@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add to Bag</title>
+    <link rel="stylesheet" href="bag.css" />
+  </head>
+  <body>
+    <section class="outer-wrapper">
+      <div class="internal-wrapper-1">
+        <div class="top-box" id="tp-box">
+          <div class="middle-img">
+            <img src="Images/large-tshirt.svg" alt="blue t-shirt" />
+          </div>
+          <div class="grad-img small-grad">
+            <img src="Images/gradient-img.svg" />
+          </div>
+        </div>
+        <div class="bottom-box" id="bm-box">
+          <div class="middle-img">
+            <img src="Images/small tshirt.png" alt="blue t-shirt" />
+          </div>
+          <div class="grad-img small-grad">
+            <img src="Images/gradient-img.svg" />
+          </div>
+        </div>
+      </div>
+      <div class="internal-wrapper-2">
+        <div class="banner-container" id="img-banner">
+          <div class="middle-img img-size">
+            <img
+              src="Images/large-tshirt.svg"
+              alt="blue t-shirt"
+              id="img_banner"
+            />
+            <img
+              src="Images/front-large-tshirt.svg"
+              alt="blue t-shirt"
+              id="front-img"
+            />
+          </div>
+          <div class="grad-img grad-size"></div>
+        </div>
+        <div class="pay-form" id="form-banner">
+          <form action="">
+            <fieldset>
+              <legend>Payment Info</legend>
+              <label for="f_name">
+                <input
+                  type="text"
+                  name="f_name"
+                  id="f_name"
+                  placeholder="First Name"
+                /> </label
+              ><br /><br />
+              <label for="l_name">
+                <input
+                  type="text"
+                  name="l_name"
+                  id="l_name"
+                  placeholder="Last Name"
+                /> </label
+              ><br /><br />
+              <label for="gender"
+                >Gender : <input type="radio" name="gender" id="gender" /> Male
+                <input type="radio" name="gender" id="gender" /> Female </label
+              ><br /><br />
+              Payment method:<select name="payment_method" id="payment_method">
+                Payment :
+                <option value=""></option>
+                <option value="MasterCard">MasterCard</option>
+                <option value="Paypal">Paypal</option>
+                <option value="Digital wallets">Digital wallets</option>
+                <option value="Amazon Pay">Amazon Pay</option>
+                <option value="Visa Card">Visa Card</option></select
+              ><br /><br />
+              <label for="account_num">
+                <input
+                  type="text"
+                  name="account_num"
+                  id="account_num"
+                  placeholder="credit card number"
+                />
+              </label>
+              <br /><br />
+              <input
+                type="submit"
+                id="buy"
+                name="buy"
+                value="Buy"
+                onclick="form_close()"
+              />
+              &nbsp;&nbsp;<input type="submit" id="go_back" value="Go back" />
+            </fieldset>
+          </form>
+        </div>
+        <div class="fig-wrapper" id="figs-wrapper">
+          <figure>
+            <img src="Images/thank u message.png" alt="thank u message" />
+          </figure>
+          <figcaption>&copy; NADX</figcaption>
+        </div>
+      </div>
+      <div class="internal-wrapper-3">
+        <section class="upper-section">
+          <div class="trade-mark"><p>Polo shirt</p></div>
+          <div class="txt-wrapper">
+            <h2>Custom fit polo bear shirt</h2>
+            <p>Blue polo with a classic cut. Made of smooth and soft cotton.</p>
+          </div>
+          <div class="price-wrapper">
+            <div class="price-box-wrapper">
+              <div class="box-1"><p>$99.00</p></div>
+              <div class="box-2">
+                <div><p>-25%</p></div>
+              </div>
+            </div>
+            <div class="b-price"><p>$132.00</p></div>
+          </div>
+        </section>
+        <section class="lower-section">
+          <div class="tag-wrapper"><p>choose size</p></div>
+          <div class="size-item-container">
+            <div class="item-1 active" onclick="object_display()"><p>S</p></div>
+            <div class="item-2" onclick="reverse_display()"><p>M</p></div>
+            <div class="item-3" onclick="object_display()"><p>L</p></div>
+            <div class="item-4" onclick="reverse_display()"><p>XL</p></div>
+            <div class="item-5" onclick="object_display()"><p>XXL</p></div>
+          </div>
+          <div class="add-btn" onclick="form_displayer()">
+            <div><p>ADD TO BAG</p></div>
+          </div>
+        </section>
+      </div>
+    </section>
+    <script src="bag.js"></script>
+  </body>
+</html>
