@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Music Event</title>
+    <link rel="stylesheet" href="music-event.css" />
+  </head>
+  <body>
+    <div class="internal-wrapper">
+      <div class="header">
+        <h1>Music events</h1>
+        <span>in London, UK</span>
+      </div>
+      <div class="menu-list">
+        <div class="item item-1">
+          <div class="left-side">
+            <span>Today</span>
+            <h2>21:00</h2>
+          </div>
+          <div class="middle">
+            <h3>Swiftogeddon-The Taylor Swift Club Night</h3>
+            <p>
+              Swiftogeddon is a night dedicated to worshipping at the altar of
+              Taylor Swift: non-stop Swifty all night: deep cuts, extended
+              mixes, fan favourites....
+            </p>
+          </div>
+          <div class="right-side container" id="container-1">
+            <div class="btn">
+              <label for="checkbox1">
+                <input
+                  type="checkbox"
+                  id="checkbox1"
+                  class="styled-checkbox"
+                  onclick="toggleBackgroundColor('container-1', 'checkbox1')"
+                />
+                Buy a Ticket
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="item item-2">
+          <div class="left-side">
+            <span>17 December</span>
+            <h2>22:00</h2>
+          </div>
+          <div class="middle">
+            <h3>Lana Del Rave</h3>
+            <p>
+              Launching the first-ever 'Lana Del Rave' at Heaven Nightclub. Join
+              us for a night devoted to the Queen of Alternative as well as
+              favourites from...
+            </p>
+          </div>
+          <div class="right-side container" id="container-2">
+            <div class="btn">
+              <label for="checkbox2">
+                <input
+                  type="checkbox"
+                  id="checkbox2"
+                  class="styled-checkbox"
+                  onclick="toggleBackgroundColor('container-2', 'checkbox2')"
+                />
+                Buy a Ticket
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="item item-3">
+          <div class="left-side">
+            <span>19 December</span>
+            <h2>18:30</h2>
+          </div>
+          <div class="middle">
+            <h3>MASSAOKE: XMAS LIVE at the Electric Ballroom</h3>
+            <p>
+              Featuring all your favourite festive hits from WHAM, SLADE,
+              MARIAH, WIZZARD, THE POGUES and many more - as well as hairbrush
+              anthem...
+            </p>
+          </div>
+          <div class="right-side container" id="container-3">
+            <div class="btn">
+              <label for="checkbox3">
+                <input
+                  type="checkbox"
+                  id="checkbox3"
+                  class="styled-checkbox"
+                  onclick="toggleBackgroundColor('container-3', 'checkbox3')"
+                />
+                Buy a Ticket
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="item item-4">
+          <div class="left-side">
+            <span>22 December</span>
+            <h2>19:00</h2>
+          </div>
+          <div class="middle">
+            <h3>Eleni Tsaligopoulou full-band</h3>
+            <p>
+              Eleni Tsaligopoulou is one of the most popular and beloved Greek
+              singers with a wide range of repertoire and timeless hits. During
+              her 30-year career...
+            </p>
+          </div>
+          <div class="right-side container" id="container-4">
+            <div class="btn">
+              <label for="checkbox4">
+                <input
+                  type="checkbox"
+                  id="checkbox4"
+                  class="styled-checkbox"
+                  onclick="toggleBackgroundColor('container-4', 'checkbox4')"
+                />
+                Buy a Ticket
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function toggleBackgroundColor(containerId, checkboxId) {
+        const container = document.getElementById(containerId);
+        const checkbox = document.getElementById(checkboxId);
+
+        if (checkbox.checked) {
+          container.style.backgroundColor = "white";
+          container.style.color = "black";
+        } else {
+          container.style.backgroundColor = "black";
+          container.style.color = "white";
+        }
+      }
+    </script>
+  </body>
+</html>
