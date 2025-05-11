@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NADX Zoo</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="carousel">
+      <h1>NADX ZOO</h1>
+      <div class="large-image-container">
+        <div>
+          <img src="Images/snake-1.png" alt="Large Image" id="large-image" />
+        </div>
+        <div class="description" id="image-description">
+          <h2>Boa imperator</h2>
+          <p>
+            is a wide-ranging species, living in both Central American and the
+            northern parts of South American. As a result, the appearance of
+            this snake varies greatly depending on the specific locality. As one
+            of the smaller Boa species, they average between 1.3 m (4.2 ft.) and
+            2.5 m (8.2 ft.)
+          </p>
+        </div>
+      </div>
+
+      <div class="thumbnail-container scroll-container" id="scroll-container">
+        <div class="scroll-content">
+          <div
+            class="thumbnail item"
+            data-src="Images/snake-1.png"
+            data-title="Boa imperator"
+            data-description="is a wide-ranging species, living in both Central American and the northern parts of South American. As a result, the appearance of this snake varies greatly depending on the specific locality. As one of the smaller Boa species, they average between 1.3 m (4.2 ft.) and 2.5 m (8.2 ft.)"
+          >
+            <img src="Images/snake-1.png" alt="Thumbnail 1" />
+          </div>
+          <div
+            class="thumbnail item"
+            data-src="Images/wolf-1.png"
+            data-title="Eurasian wolf"
+            data-description="The Eurasian wolf, also known as the common wolf,
+      is a subspecies of grey wolf native to Europe and Asia. 
+      It was once widespread throughout Eurasia prior to the 
+      Middle Ages"
+          >
+            <img src="Images/wolf-1.png" alt="Thumbnail 2" />
+          </div>
+          <div
+            class="thumbnail item"
+            data-src="Images/Caracals-1.png"
+            data-title="Caracals"
+            data-description="With their sleek, streamlined body, short, reddish gold cats, and dramatic marking on the face, caracals are among the most beautiful of cats. Also called the desert lynx, medium-sized caracals have no spots or stripes and have long and a slimmer body than a true lynx."
+          >
+            <img src="Images/Caracals-1.png" alt="Thumbnail 3" />
+          </div>
+          <div
+            class="thumbnail item"
+            data-src="Images/Hyena-1.png"
+            data-title="Hyenas"
+            data-description="Hyenas or hyaenas are feliform carnivoran mammalsbelonging to the family Hyaenidae. 
+    With just four extant species, 
+    it is the fifth-smallest family in the order Carnivora and 
+    one of the smallest in the class Mammalia"
+          >
+            <img src="Images/Hyena-1.png" alt="Thumbnail 4" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      const thumbnails = document.querySelectorAll(".thumbnail");
+      const largeImage = document.getElementById("large-image");
+      const imageDescription = document.getElementById("image-description");
+
+      thumbnails.forEach((thumbnail) => {
+        thumbnail.addEventListener("click", function () {
+          const newSrc = thumbnail.getAttribute("data-src");
+          const newTitle = thumbnail.getAttribute("data-title");
+          const newDescription = thumbnail.getAttribute("data-description");
+
+          largeImage.src = newSrc;
+          imageDescription.querySelector("h2").textContent = newTitle;
+          imageDescription.querySelector("p").textContent = newDescription;
+        });
+      });
+      document
+        .getElementById("scroll-container")
+        .addEventListener("click", function () {
+          const scrollContent = document.querySelector(".scroll-content");
+          const isPaused = scrollContent.style.animationPlayState === "paused";
+          scrollContent.style.animationPlayState = isPaused
+            ? "running"
+            : "paused";
+        });
+    </script>
+  </body>
+</html>
