@@ -1,0 +1,143 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.container {
+  display: flex;
+  flex-flow: column wrap;
+  border: 1px solid #989898;
+  width: 100%;
+  max-width: 430px;
+  padding: 30px 40px;
+  margin: 50px 45px;
+
+  border-radius: 15px;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  -ms-border-radius: 15px;
+  -o-border-radius: 15px;
+}
+.header {
+  text-align: center;
+}
+
+.img {
+  width: 100%;
+}
+.google-btn img {
+  max-width: 350px;
+  border: 1px solid #807d7d88;
+  border-radius: 9px;
+  -webkit-border-radius: 9px;
+  -moz-border-radius: 9px;
+  -ms-border-radius: 9px;
+  -o-border-radius: 9px;
+}
+
+button img {
+  width: 30px;
+  position: relative;
+  top: 4px;
+  right: 4px;
+}
+button {
+  max-width: 350px;
+  padding: 10px 14px;
+  border-radius: 6px;
+  background-color: #051b3c;
+  color: #fff;
+  font-size: 18px;
+  margin-top: 15px;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  -ms-border-radius: 6px;
+  -o-border-radius: 6px;
+}
+a {
+  color: white;
+  text-decoration: none;
+}
+.tag {
+  position: relative;
+  bottom: 7px;
+  font-size: 18px;
+}
+span {
+  font-size: 18px;
+  position: relative;
+  left: 6px;
+  color: blue;
+}
+span:hover {
+  color: rgb(57, 57, 255);
+}
+/* For sign up form and Login page*/
+.form-container {
+  margin: 0px auto 20px;
+  max-width: 600px;
+  padding: 10px 70px 50px;
+  display: flex;
+  flex-flow: column wrap;
+}
+form {
+  display: flex;
+  flex-flow: column wrap;
+}
+input {
+  padding: 15px;
+  border-radius: 6px;
+  border: 1px solid #989898;
+  margin: 6px 0;
+  position: relative;
+  left: 10px;
+  width: 100%;
+  max-width: 600px;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  -ms-border-radius: 6px;
+  -o-border-radius: 6px;
+}
+.tag-2 {
+  position: relative;
+  left: 10px;
+  font-size: 18px;
+}
+.btn {
+  max-width: 635px;
+  height: 80px;
+  margin-left: 15px;
+}
+
+.btn img {
+  width: 100%;
+}
+#sign-up {
+  background-color: #051b3c;
+  color: #fff;
+  font-size: 18px;
+}
+hr {
+  margin-left: 8px;
+  width: 100%;
+}
+i.center-tag {
+  position: relative;
+  bottom: 20px;
+  font-style: normal;
+  left: 50%;
+  background-color: #fff;
+}
+.arrow img {
+  position: relative;
+  top: 5px;
+  right: 10px;
+  width: 16px;
+}
+@media screen and (min-width: 720px) {
+  .container {
+    margin-left: 36%;
+  }
+}

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign in form</title>
+    <link rel="stylesheet" href="sign-up.css" />
+  </head>
+  <body>
+    <div class="form-container">
+      <div class="arrow">
+        <a href="index.html"><img src="Images/arrow-icon.svg" /></a>
+      </div>
+      <div class="header">
+        <h1>Sign Up</h1>
+        <p>Join us now! sign up to kick-start your journey</p>
+      </div>
+      <div class="form">
+        <form action="" onsubmit="return validateForm()" name="myForm">
+          <label for="f_name" name="f_name">
+            <input
+              type="text"
+              name="f_name"
+              id="f_name"
+              placeholder="Name"
+            />
+          </label>
+          <label for="email">
+            <input type="text" name="email" id="email" placeholder="Email" />
+          </label>
+          <label for="password" name="password">
+            <input
+              type="password"
+              name="password"
+              id="password"
+              placeholder="Password"
+            />
+          </label>
+          <label for="sign-up" name="sign-up">
+            <input type="submit" value="Sign Up" name="sign-up" id="sign-up" />
+          </label>
+          <p class="tag-2">Already have an account<a href="login.html"><span> Log In</span></a></p>
+        </form>
+        <hr />
+        <i class="center-tag">or</i>
+      </div>
+      <div class="btn">
+        <a href="index.html"><img src="Images/signup-icon.svg" alt="" /></a>
+      </div>
+    </div>
+    <script src="validation.js"></script>
+  </body>
+</html>

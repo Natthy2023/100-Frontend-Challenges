@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <link rel="stylesheet" href="sign-up.css" />
+  </head>
+  <body>
+    <div class="form-container">
+      <div class="arrow">
+        <a href="form.html"><img src="Images/arrow-icon.svg" /></a>
+      </div>
+      <div class="header">
+        <h1>Login</h1>
+        <p>Join us now! login to kick-start your journey</p>
+      </div>
+      <div class="form">
+        <form action="" onsubmit="return validateForm()" name="myForm">
+          
+          <label for="email">
+            <input type="text" name="email" id="email" placeholder="Email" />
+          </label>
+          <label for="password" name="password">
+            <input
+              type="password"
+              name="password"
+              id="password"
+              placeholder="Password"
+            />
+          </label>
+          <label for="sign-up" name="sign-up">
+            <input type="submit" value="Login" name="sign-up" id="sign-up" />
+          </label>
+        
+        </form>
+        <hr />
+        <i class="center-tag">or</i>
+      </div>
+      <div class="btn">
+        <a href="index.html"><img src="Images/signup-icon.svg" alt="" /></a>
+      </div>
+    </div>
+    <script>
+      function validateForm() {
+  var email = document.forms["myForm"]["email"].value;
+  var password = document.forms["myForm"]["password"].value;
+
+  if (email == "") {
+    alert("Email must be filled out");
+    return false;
+  }
+  if (password == "") {
+    alert("Password must be filled out");
+    return false;
+  }
+}
+    </script>
+  </body>
+</html>
