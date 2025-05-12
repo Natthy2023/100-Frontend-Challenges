@@ -5,7 +5,7 @@ body {
   margin: 0;
   padding: 0;
   max-width: 100%;
-
+  background-color: #fff;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 img {
@@ -15,7 +15,7 @@ img {
   width: 100%;
   display: flex;
   justify-content: space-between;
-
+   
   height: 635px;
   box-sizing: border-box;
 }
@@ -29,7 +29,7 @@ img {
 }
 .internal-wrapper-2 {
   width: 40%;
-
+  background-color: #fff;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
