@@ -1,0 +1,105 @@
+/* css stylesheet for index page */
+body {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+#toggle.fa {
+  position: absolute;
+  top: 15px;
+  right: 8px;
+  color: white;
+}
+img {
+  width: 30px;
+  height: 30px;
+  margin-top: 15px;
+  margin-left: 15px;
+}
+.header {
+  position: sticky;
+  top: 0px;
+  width: 100%;
+  color: white;
+}
+.container {
+  width: 100%;
+  max-width: 600px;
+  height: 1000px;
+}
+
+footer {
+  width: 100%;
+  height: 60px;
+  position: fixed;
+  display: flex;
+  bottom: 0;
+ 
+}
+footer .social-media {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.icon-Decoration {
+  transform: scale(1.5);
+  transition: transform 0.5s ease-in;
+}
+i#tag {
+  display: inline;
+  animation: dimLightAnimation infinite 2s ease-in-out;
+}
+
+@keyframes dimLightAnimation {
+  0%,
+  10% {
+    color: green;
+    font-size: 16px;
+  }
+  10%,
+  20% {
+    color: yellow;
+    font-size: 17px;
+  }
+  20%,
+  30% {
+    color: red;
+    font-size: 16px;
+  }
+  30%,
+  40% {
+    color: hotpink;
+    font-size: 17px;
+  }
+  40%,
+  50% {
+    color: aqua;
+    font-size: 16px;
+  }
+  50%,
+  60% {
+    color:chartreuse;
+    font-size: 17px;
+  }
+  60%,
+  70% {
+    color:crimson;
+    font-size: 16px;
+  }
+  70%,
+  80% {
+    color:cornsilk;
+    font-size: 17px;
+  }
+  80%,
+  90% {
+    color:midnightblue;
+    font-size: 16px;
+  }
+  90%,
+  100% {
+    color:aliceblue;
+    font-size: 17px;
+  }
+}

@@ -1,0 +1,78 @@
+/* css stylesheet for light-mode */
+* {
+  box-sizing: border-box;
+}
+body {
+  width: 100%;
+  margin: 0;
+  font-family: Verdana, Geneva, Tahoma;
+  height: auto;
+  background-color: white;
+  color: black;
+}
+h1 {
+  color: rgb(102, 98, 98);
+}
+.container {
+  width: 600px;
+  background-color: white;
+  padding: 15px;
+}
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.text-center {
+  text-align: center;
+}
+.row {
+  margin: auto;
+  height: auto;
+}
+.internal-wrapper {
+  padding: 10px;
+  background-color: white;
+}
+.d-btn {
+  background-color: rgb(214, 214, 214);
+  color: black;
+  border: 1px solid black;
+  padding: 1px;
+  display: flex;
+  height: 60px;
+}
+p {
+  width: 85%;
+  padding: 5px;
+  margin-left: 5px;
+}
+span,
+i {
+  display: block;
+  width: 10%;
+}
+.fa-plus {
+  color: black;
+}
+.content {
+  display: none;
+  background-color: rgb(252, 251, 251);
+  color: black;
+  padding: 1px;
+  height: auto;
+  border: 1px solid black;
+}
+.content p {
+  padding-left: 15px;
+}
+.header {
+  background-color: white;
+  border-bottom: 2px solid black;
+  filter: drop-shadow(0px 2px 1px black);
+}
+footer {
+  background-color: white;
+  border-top: 2px solid black;
+  filter: drop-shadow(0px 2px 1px black);
+}
