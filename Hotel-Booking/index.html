@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hotel Booking</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>NADX HOTEL</h1>
+      <div class="side left-side">
+        <div class="upper-side">
+          <form action="">
+            <label for="check-in-date">Check In </label><br />
+            <input
+              type="date"
+              name="check-in-date"
+              id="check-in-date"
+              placeholder="8 February, 2024"
+            />
+            <br /><br />
+            <label for="check-out-date">Check Out</label>
+            <input
+              type="date"
+              name="check-out-date"
+              id="check-out-date"
+              placeholder="12 February, 2024"
+            />
+            <br /><br />
+            <div class="side-align">
+              <label for="adults">Adults</label><br />
+              <select name="adults" id="adults">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+              </select>
+              <label for="children">Children</label><br />
+              <select name="children" id="children">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+              </select>
+            </div>
+          </form>
+        </div>
+        <div class="lower-side">
+          <button type="button">Book a room</button>
+        </div>
+      </div>
+      <div class="side right-side">
+        <div class="lg-box">
+          <img src="./images/bedroom.png" alt="" />
+          <p>Golden Apartments</p>
+          <p><img src="" />Punta Cana, Dominican Republic</p>
+        </div>
+        <div class="sm-boxes">
+          <div class="item item-1">
+            <img src="./images/swimming-pool.jpg" alt="" />
+          </div>
+          <div class="item item-2">
+            <img src="./images/building.jpeg" alt="" />
+          </div>
+          <div class="item item-3"><img src="./images/pool.png" alt="" /></div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
