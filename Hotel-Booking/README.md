@@ -16,7 +16,7 @@ A simple and reponsive **Hotel Booking Page** built with **HTML** and **CSS**.
 ## 📸 Screenshot
 
 ![Hotel Booking Preview1](images/desktop-preview.png)
-![Hotel Booking Preview2](images/desktop-preview.png)
+![Hotel Booking Preview2](images/mobile-preview.png)
 
 ---
 
