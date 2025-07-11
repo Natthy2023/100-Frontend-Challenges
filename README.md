@@ -21,7 +21,8 @@ Explore live demos of each project below:
 | 📚 **eBook Store**       | [View Demo](https://nadxweb.netlify.app/eBookstore/)          |
 | ❓ **FAQ Accordion**      | [View Demo](https://nadxweb.netlify.app/faq/)                 |
 | 📬 **Newsletter UI**     | [View Demo](https://nadxweb.netlify.app/newsletter/)          |
-| 🏨 **Hotel Booking**     | [View Demo](https://nadxweb.netlify.app/hotel-booking/)       |
+| 🏚 **Hotel Booking**     | [View Demo](https://nadxweb.netlify.app/hotel-booking/)       |
+| 🏨 **Restaurant Reservation** | [View Demo](https://nadxweb.netlify.app/restaurant-reservation/)       |
 ---
 
 ## 🚀 Getting Started
