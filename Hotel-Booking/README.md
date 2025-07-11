@@ -1,5 +1,5 @@
 
-# 🎮 Hotel Booking Page
+#  Hotel Booking Page
 
 A simple and reponsive **Hotel Booking Page** built with **HTML** and **CSS**.
 
