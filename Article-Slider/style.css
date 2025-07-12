@@ -87,6 +87,13 @@ button {
 .profile-box img {
   width: 100%;
   border-radius: 50%;
+  opacity: 0.5;
+  transform: scale(0.9);
+  transition: 0.5s ease-in;
+}
+.profile-box img:hover {
+ opacity: 1;
+  transform: scale(1);
 }
 .title {
   align-self: flex-start;
@@ -98,13 +105,32 @@ button {
 .share-btn button {
   padding: 5px;
 }
+i {
+  display: block;
+  padding: 2px;
+  transition: 0.3s ease-out;
+}
+i:hover {
+  transform: scale(1.5);
+}
+.fa-facebook:hover {
+  color: #4070ef;
+}
+.fa-instagram:hover {
+  color: rgb(224, 33, 12);
+}
+.fa-telegram:hover{
+  color: rgb(47, 157, 204)
+}
 .share-pop-up {
-  display: flex;
+  display: none;
   position: relative;
   top: 9px;
   border-radius: 3px;
 }
-
+.display {
+  display: block;
+}
 .share-btn span {
   display: block;
   width: 33.3%;
