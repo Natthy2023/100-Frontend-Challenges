@@ -1,0 +1,134 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+}
+body {
+  max-width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+img {
+  max-width: 100%;
+}
+
+.container {
+  width: 600px;
+  background-color: #fff;
+  margin: 30px auto;
+  padding: 10px;
+  border: none;
+ 
+}
+.header {
+  padding: 15px;
+}
+h1 {
+  font-size: 45px;
+}
+.search-bar,
+.head-title {
+  padding: 5px;
+  text-align: center;
+}
+.search-bar input {
+  padding: 6px;
+  border: 1px solid grey;
+  border-radius: 5px;
+  font-size: medium;
+}
+.main-content {
+  width: 380px;
+  margin: auto;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+
+}
+.main-content {
+    text-align: center;
+    margin-top: 50px;
+    font-family: sans-serif;
+  }
+  .main-content h1 {
+    font-size: 48px;
+    color: #ff4c4c;
+  }
+  .main-content p {
+    font-size: 18px;
+    color: #555;
+  }
+.item {
+  background-color: #fff;
+  display: flex;
+  width: 100%;
+  border: none;
+  border-radius: 15px;
+  margin: 15px auto;
+  justify-content: center;
+  align-items: flex-start;
+  
+  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+}
+
+
+.side-l {
+  width: 32%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 150px;
+  border-radius: 15px 0 0 15px;
+}
+
+.first {
+  background-image: url(./images/Lola.jpeg);
+}
+.second {
+  background-image: url(./images/Bailey.jpeg);
+}
+.third {
+  background-image: url(./images/Buddy.jpeg);
+}
+.fourth {
+  background-image: url(./images/Tucker.jpeg);
+}
+.side-r {
+  width: 60%;
+  padding: 30px 30px 0;
+
+}
+h2 {
+  font-size: 1.8rem;
+ 
+}
+.side-r p {
+  font-size: 1rem;
+  padding: 4px 0;
+}
+.fa-heart {
+  display: block;
+  position: relative;
+  top: 35px;
+  right: 10px;
+  width: 5%;
+  margin:2px auto;
+  font-size: 20px!important;
+}
+.fa-heart:hover{
+color: rgb(198, 45, 45);
+}
+.fa-map-marker {
+  color: rgb(205, 51, 51);
+}
+@media screen and (max-width: 600px){
+ 
+ .main-content {
+  width: 320px;
+  
+ }
+}

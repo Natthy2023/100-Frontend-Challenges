@@ -1,0 +1,104 @@
+.item {
+  flex-direction: column;
+  
+}
+.side-l {
+  border-radius: 15px;
+}
+.side-l:hover {
+  height: 400px;
+}
+.side {
+  padding: 20px;
+  text-align: left;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.fa-heart {
+  position: relative;
+  left: 49%;
+  top: -52%;
+  color: rgb(251, 74, 74);
+}
+.fa-arrow {
+ margin-top: 30px;
+  position: relative;
+  top: -50%;
+  right: 5px;
+  color: #ddff02;
+}
+
+.info {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.upper-wrapper {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px;
+}
+.lower-wrapper {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 10px;
+  gap: 15px;
+}
+.lower-wrapper > div {
+  border: 1px solid rgb(207, 204, 204);
+  width: 70px;
+  text-align: center;
+  border-radius: 5px;
+}
+.box p {
+  font-size: 15px;
+  color: #030303;
+  background-color: rgb(207, 204, 204);
+}
+.middle p {
+  font-size: 14px;
+  padding: 1px 20px;
+}
+.btns {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  padding: 15px;
+}
+.btns button {
+  width: 100px;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+}
+.fa-venus {
+  font-size: 16px !important;
+  position: relative;
+  bottom: 8px;
+}
+.adopt {
+  background-color: rgb(255, 5, 130);
+  color: #fff;
+}
+.donate:hover {
+  background-color: rgb(181, 181, 181);
+}
+.adopt:hover {
+  opacity: 0.6;
+}
+.fa-usd {
+  border: 1px solid;
+  padding: 2px 1px;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  color: #fff;
+  background-color: #030303;
+}
+.see {
+  color: rgb(255, 5, 130);
+  font-weight: 500;
+}
