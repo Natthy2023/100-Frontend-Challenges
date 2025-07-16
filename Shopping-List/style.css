@@ -58,6 +58,9 @@ button:hover {
   font-weight: 600;
   padding: 14px 16px;
 }
+.nav-bar {
+  display: block;
+}
 #menu {
   visibility: hidden;
 }
