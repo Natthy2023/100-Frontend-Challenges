@@ -188,9 +188,7 @@ button:hover {
 .visible {
   display: block;
 }
-.hide {
-  display: none;
-}
+
 /* Footer */
 .footer {
   padding: 19px 0;
