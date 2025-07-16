@@ -58,9 +58,13 @@ button:hover {
   font-weight: 600;
   padding: 14px 16px;
 }
+#menu {
+  visibility: hidden;
+}
 .header a:hover {
   color: #d2d2d2;
 }
+
 
 /* Main content*/
 .main-content {
@@ -302,6 +306,9 @@ button:hover {
   }
   .cart [title]::after {
     display: none;
+  }
+  #menu {
+    visibility: visible;
   }
   .main-content {
     max-height: 700px;
