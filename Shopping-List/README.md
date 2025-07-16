@@ -14,14 +14,26 @@ A simple fully functional and reponsive **Shopping List Page** built with **HTML
 
 ## 📸 Screenshot
 
-### Desktop & Tablet Preview
-![Shopping List Desktop Preview](images/desktop-preview.png)
-![Shopping List Desktop Preview](images/desktop-preview2.png)
+### Desktop Review
+
 ![Shopping List Desktop Preview](images/desktop-preview3.png)
 
+---
+
+## Tablet Preview
+
+![Shopping List Desktop Preview](images/desktop-preview.png)
+
+![Shopping List Desktop Preview](images/desktop-preview2.png)
+
+---
+
 ### Mobile Preview
+
 ![Shopping List Mobile Preview](images/mobile-preview.png)
+
 ![Shopping List Mobile Preview](images/mobile-preview1.png)
+
 ![Shopping List Mobile Preview](images/mobile-preview2.png)
 
 ---
