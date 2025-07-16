@@ -1,7 +1,7 @@
 
 #  Shopping List 
 
-A simple fully functional and reponsive **Shopping List Page** built with **HTML**, **CSS** and **JS**.
+A simple fully functional and responsive **Shopping List Page** built with **HTML**, **CSS** and **JS**.
 
 🌐 **Live Demo**: [CLICK ME](https://nadxweb.netlify.app/shopping-list/)
 
