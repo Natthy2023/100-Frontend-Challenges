@@ -10,7 +10,7 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: linear-gradient(#ffc279);
+  background-color: #ffc279;
 }
 img {
   max-width: 100%;
