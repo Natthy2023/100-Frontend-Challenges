@@ -14,7 +14,7 @@ A simple fully functional and responsive **User Profile Page** built with **HTML
 
 ## 📸 Screenshot
 
-![Shopping List Desktop Preview](videos/demo.mp4)
+[Shopping List Desktop Preview](videos/demo.mp4)
 
 ---
 
