@@ -1,0 +1,110 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #e7e7e7;
+}
+img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+}
+
+.container {
+  padding: 20px;
+  width: 400px;
+  border-radius: 10px;
+}
+.container > div {
+  background-color: #fff;
+  border: none;
+  box-shadow: 0 0 15px rgb(201, 197, 197);
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px;
+}
+.header .item {
+  padding: 5px;
+}
+.header .item-1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.user-box {
+  padding: 0;
+}
+.email-box {
+  padding: 0 5px;
+}
+#username {
+  margin-left: 5px;
+  padding: auto 4px;
+  font-size: 20px;
+  font-weight: 500;
+}
+.header .item-1 img {
+  max-width: 100%;
+}
+#verify-icon {
+  width: 20px;
+  height: 20px;
+}
+.item-2 {
+  margin-top: 15px;
+}
+.fa-ellipsis-h {
+  color: #121212;
+  padding: 5px;
+  cursor: pointer;
+}
+.header,
+.main-content {
+  border: 1px solid rgb(183, 181, 181);
+  border-radius: 10px;
+  margin-top: 15px;
+}
+
+.visible {
+  visibility: hidden;
+}
+.upper-content,
+.middle-content,
+.lower-content {
+  padding: 12px 15px;
+}
+.middle-content p,
+.lower-content p {
+  padding: 5px;
+}
+
+.main-content p {
+  padding: 6px 4px;
+  transition: all 0.5s ease-in-out;
+}
+.main-content p:hover {
+  background-color: #eeeeee;
+  border-radius: 10px;
+}
+.lower-content p {
+  padding: 5px;
+}
+.upper-content {
+  display: flex;
+  gap: 10px;
+}
+.middle-content i,
+.lower-content i {
+  color: #434343;
+  padding: 5px;
+  width: 25px;
+}
