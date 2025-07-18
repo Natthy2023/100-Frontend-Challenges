@@ -89,7 +89,6 @@ img {
 
 .main-content p {
   padding: 6px 4px;
-  transition: all 0.5s ease-in-out;
 }
 .main-content p:hover {
   background-color: #eeeeee;
