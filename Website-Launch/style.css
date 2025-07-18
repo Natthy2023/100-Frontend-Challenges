@@ -38,7 +38,7 @@ h1 {
   border-radius: 15px;
   display: block;
   width: 100%;
-  background: linear-gradient(#2497d9ea);
+  background-color: #2497d9ea;
 }
 .time-banner {
   display: flex;
