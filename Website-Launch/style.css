@@ -67,7 +67,8 @@ h1 {
   h1 {
     font-size: 1rem;
     padding: 0;
-    letter-spacing: 5px;
+    letter-spacing: 4px;
+    font-weight: 600;
   }
   .time-banner {
     display: flex;
