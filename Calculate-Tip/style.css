@@ -120,9 +120,7 @@ input::placeholder {
   border: 1px solid #4f4f4f;
 }
 @media screen and (max-width: 720px) {
-  body {
-    height: 65vh;
-  }
+  
   .container {
     flex-flow: column nowrap;
     width: 300px;
