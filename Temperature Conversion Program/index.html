@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Temperature Conversion Program</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Temperature Conversion</h1>
+      <div>
+        <input type="number" id="textBox" placeholder="Degree" />
+      </div>
+
+      <p id="result"></p>
+
+      <div class="checkboxes-wrapper">
+        <input type="radio" name="radiobtn" id="checkBox1" class="checkboxes" />
+        <label for="checkBox1">Celsius → Fahrenheit</label><br /><br />
+        <input type="radio" name="radiobtn" id="checkBox2" class="checkboxes" />
+        <label for="checkBox2">Fahrenheit → Celsius</label>
+      </div>
+      <button type="submit" id="btn">Submit</button>
+    </div>
+    <script src="index.js"></script>
+  </body>
+</html>

@@ -1,0 +1,67 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Verdana;
+}
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #0e093a;
+}
+.container {
+  width: 300px;
+  background-color: #fff;
+  padding: 20px;
+  border: none;
+  border-radius: 15px;
+  text-align: center;
+  outline: none;
+}
+h1 {
+  padding: 10px;
+  color: #0e093a;
+}
+.container > div {
+  padding: 15px;
+  color: #0e093a;
+}
+input[type='number'] {
+  width: 200px;
+  padding: 8px;
+  font-size: 1.5em;
+  text-align: center;
+  border: none;
+  outline: none;
+  color: #0e093a;
+  border-radius: 10px;
+  background-color: rgb(206, 208, 210);
+}
+input[type='number']::placeholder {
+  color: #0e093a;
+}
+input[type='number']:focus {
+  outline: 3px solid #0e093a;
+}
+input[name='radiobtn'] {
+  accent-color: #0e093a;
+}
+
+button {
+  width: 200px;
+  margin: 5px auto;
+  display: block;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  color: #fff;
+  background-color: #0e093a;
+}
+button:hover {
+  background-color: #0e093a94;
+}
+#result {
+  color:#0e093a;
+}
