@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QR Code Scanner</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Manufacturing+Consent&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Oswald:wght@200..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet"
+  />
+  <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="row r-1">
+     <div class="upper">
+    <a href="./index.html">  <i class="fa fa-arrow-left"></i></a>
+      <span>Scan QR Code</span>
+     </div>
+     <div class="lower">
+      <p>Position the QR code within the frame for fast scanning. Minimize shaking to expedite results.</p>
+     </div>
+    </div>
+    <div class="row r-2">
+      <video class="hide" id="camera" autoplay playsinline style="width: 150px; height: 250px;"></video>
+      <div class="scan-board">
+        
+
+        <div class="item item-1"><i class="fa fa-angle-right" aria-hidden="true"></i></div>
+        <div class="item item-2"><i class="fa fa-angle-right" aria-hidden="true"></i></div>
+        <div class="item item-3"><i class="fa fa-angle-right" aria-hidden="true"></i></div>
+        <div class="item item-4"><i class="fa fa-angle-right" aria-hidden="true"></i></div>
+      </div>
+      
+      <button id="scan-btn">Scan QR Code</button>
+      
+    </div>
+    
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
