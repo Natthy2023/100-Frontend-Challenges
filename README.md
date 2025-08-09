@@ -32,6 +32,7 @@ Explore live demos of each project below:
 | 🏨 **User-Profile** | [View Demo](https://nadxweb.netlify.app/user-profile/)       |
 | 🏨 **Temperature Conversion Program** | [View Demo](https://nadxweb.netlify.app/temperature%20conversion%20program/)       |
 | 🏨 **Home-Page** | [View Demo](https://nadxweb.netlify.app/home-page/)       |
+| 🏨 **Digital-Clock** | [View Demo](https://nadxweb.netlify.app/digital-clock/)       |
 ---
 ## Folder Structure
 ```
