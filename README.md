@@ -23,6 +23,15 @@ Explore live demos of each project below:
 | 📬 **Newsletter UI**     | [View Demo](https://nadxweb.netlify.app/newsletter/)          |
 | 🏚 **Hotel Booking**     | [View Demo](https://nadxweb.netlify.app/hotel-booking/)       |
 | 🏨 **Restaurant Reservation** | [View Demo](https://nadxweb.netlify.app/restaurant-reservation/)       |
+| 🏨 **Hosting Features** | [View Demo](https://nadxweb.netlify.app/hosting-features/)       |
+| 🏨 **QR-Scanner** | [View Demo](https://nadxweb.netlify.app/qr-scanner/)       |
+| 🏨 **Rate-Us** | [View Demo](https://nadxweb.netlify.app/rate-us/)       |
+| 🏨 **Shopping-List** | [View Demo](https://nadxweb.netlify.app/shopping-list/)       |
+| 🏨 **Website Launch** | [View Demo](https://nadxweb.netlify.app/website-launch/)       |
+| 🏨 **Fur-Friends** | [View Demo](https://nadxweb.netlify.app/fur-friends/)       |
+| 🏨 **User-Profile** | [View Demo](https://nadxweb.netlify.app/user-profile/)       |
+| 🏨 **Temperature Conversion Program** | [View Demo](https://nadxweb.netlify.app/temperature%20conversion%20program/)       |
+| 🏨 **Home-Page** | [View Demo](https://nadxweb.netlify.app/home-page/)       |
 ---
 ## Folder Structure
 ```
