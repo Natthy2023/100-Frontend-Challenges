@@ -2,7 +2,7 @@ const mediaList = document.querySelectorAll('.fa-brands');
 const msgTypeList = document.querySelectorAll('.btn');
 const msg = document.querySelector('#msg-box');
 const generateBtn = document.querySelector('.generate-btn');
-const userMessage = "What is javascript";
+const userMessage = msg.value;
 let desiredTone;
 mediaList.forEach((icon)=>{
     icon.addEventListener('click',function(e){
@@ -82,4 +82,5 @@ generateBtn.addEventListener('click',function(){
         document.getElementById('response-container').textContent = error;
     });
 });
+
 
