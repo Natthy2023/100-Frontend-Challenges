@@ -73,11 +73,14 @@ generateBtn.addEventListener('click', function () {
       const container = document.getElementById('response-container');
       container.textContent = response;
       container.classList.add('response-container');
+      document.body.style.height ='auto';
+      document.body.style.marginTop='30px';
     })
     .catch(error => {
       document.getElementById('response-container').textContent = error;
     });
 });
+
 
 
 
