@@ -58,7 +58,7 @@ textarea {
 }
 .lower-content{
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     gap: 15px;
 }
 .generate-btn {
@@ -74,6 +74,7 @@ textarea {
 .generate-btn:hover {
     background-color: #1f7226;
 }
+
 
 
 
