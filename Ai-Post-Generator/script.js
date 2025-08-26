@@ -31,7 +31,7 @@ msgTypeList.forEach((button) => {
 const API_KEY = "YOUR_API_KEY"; 
 
 async function generateResponse(userPrompt, tone) {
-  const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-latest:generateContent?key=${API_KEY}`;
+  const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${API_KEY}`;
 
   const fullPrompt = `${tone}. ${userPrompt}`;
 
@@ -78,3 +78,4 @@ generateBtn.addEventListener('click', function () {
       document.getElementById('response-container').textContent = error;
     });
 });
+
