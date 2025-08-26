@@ -28,7 +28,7 @@ msgTypeList.forEach((button) => {
 });
 
 // Gemini API
-const API_KEY = "YOUR_API_KEY"; 
+const API_KEY = "AIzaSyCHf5b1ftuasC7NqaZF6ZYEvYjGOXTh9Pw"; 
 
 async function generateResponse(userPrompt, tone) {
   const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${API_KEY}`;
@@ -78,5 +78,6 @@ generateBtn.addEventListener('click', function () {
       document.getElementById('response-container').textContent = error;
     });
 });
+
 
 
