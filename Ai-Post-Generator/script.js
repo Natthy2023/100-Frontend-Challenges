@@ -2,7 +2,7 @@ const mediaList = document.querySelectorAll('.fa-brands');
 const msgTypeList = document.querySelectorAll('.btn');
 const msg = document.querySelector('#msg-box');
 const generateBtn = document.querySelector('.generate-btn');
-let desiredTone ; 
+let desiredTone = "neutral"; 
 
 // Media redirection
 mediaList.forEach((icon) => {
@@ -78,4 +78,5 @@ generateBtn.addEventListener('click', function () {
       document.getElementById('response-container').textContent = error;
     });
 });
+
 
