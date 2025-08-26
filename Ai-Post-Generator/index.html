@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ai Post Generator</title>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+        <h1>Generator your post</h1>
+    </div>
+    <div class="content" id="response-container">
+        <div class="upper-content">
+            <h2 class="social-tag">Social platform</h2>
+            <div class="media-wrapper">
+                <div class="item item-1"><i class="fa-brands fa-facebook-f"></i></div>
+                <div class="item item-2"><i class="fa-brands fa-x-twitter"></i></div>
+                <div class="item item-3"><i class="fa-brands fa-pinterest-p"></i></div>
+                <div class="item item-4"><i class="fa-brands fa-linkedin"></i></div>
+            </div>
+        </div>
+        <div class="middle-content-1">
+            <h2 class="msg-title">Your message</h2>
+            <textarea id="msg-box" placeholder="Programming"></textarea>
+        </div>
+        <div class="middle-content-2">
+            <h2 class="type-tag">Tone of voice</h2>
+            <button class="btn btn-1">Polite</button>
+            <button class="btn btn-2">Funny</button>
+            <button class="btn btn-3">Friendly</button>
+            <button class="btn btn-4">Informal</button>
+            <button class="btn btn-5">Serious</button>
+            <button class="btn btn-6">Optimistic</button>
+            <button class="btn btn-7">Motivational</button>
+        </div>
+        <div class="lower-content">
+            <h2 class="style-tag">
+                <button class="btn btn-1">Work</button>
+                <button class="btn btn-2">Opinion</button>
+                <button class="btn btn-3">Case Study</button>
+                <button class="btn btn-4">Story</button>
+                <button class="btn btn-5">Tutorial</button>
+            </h2>
+        </div>
+        <button class="generate-btn">Generate post</button>
+    </div>
+  </div>  
+  <script src="script.js"></script>
+</body>
+</html>
