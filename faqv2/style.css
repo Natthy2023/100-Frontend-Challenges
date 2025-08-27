@@ -44,10 +44,10 @@ body{
   border: none;
   box-shadow: 0 0 15px #bcb4b4b5;
   border-radius: 25px;
-  font-size: 0.8em;
 }
 .upper-box p {
   padding-left:  15px;
+  font-size: 0.8em;
 }
 .upper-box .icon-box {
   padding-right: 10px;
@@ -93,7 +93,7 @@ padding: 10px 15px;
   .upper-bg {
     width: 100%;
   }
-  .upper-box {
+  .upper-box p{
     font-size: 1em;
   }
 }
