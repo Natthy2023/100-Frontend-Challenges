@@ -16,7 +16,7 @@ body{margin:0;font-family:Inter,sans-serif;background:var(--bg);color:var(--text
 input,select,button{padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,.06);background:transparent;color:var(--text);transition:all 0.3s;}
 button{cursor:pointer;background:linear-gradient(90deg,var(--accent),#7c3aed);border:none;transition:all 0.3s;}
 button:hover{transform:scale(1.05);}
-#canvasWrap{width:100%;max-width:1000px;height:400px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.04));border-radius:8px;display:flex;align-items:flex-end;justify-content:center;overflow-x:auto;}
+#canvasWrap{width:100%;max-width:1000px;height:400px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.04));border-radius:8px;display:flex;align-items:flex-end;justify-content:center;overflow-x:auto;overflow-y:hidden;}
 canvas{width:100%;height:100%;}
 #codeArea{width:100%;max-width:1000px;height:250px;overflow:auto;background:var(--panel);padding:12px;border-radius:8px;font-family:monospace;white-space:pre;}
 #userInput{width:120px;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,.1);background:var(--panel);color:var(--text);}
@@ -29,6 +29,15 @@ canvas{width:100%;height:100%;}
 <option value="stack">Stack</option>
 <option value="queue">Queue</option>
 <option value="linkedlist">Linked List</option>
+</select>
+<select id="linkedListType">
+<option value="singly">Singly Linked List</option>
+<option value="doubly">Doubly Linked List</option>
+</select>
+<select id="queueType">
+<option value="normal">Normal Queue</option>
+<option value="deque">Double-Ended Queue</option>
+<option value="circular">Circular Queue</option>
 </select>
 <input type="number" id="userInput" placeholder="Value">
 <select id="langSelect"><option value="js">JavaScript</option><option value="cpp">C++</option><option value="python">Python</option></select>
@@ -46,14 +55,18 @@ canvas{width:100%;height:100%;}
 <script>
 const canvas=document.getElementById('slqCanvas'),ctx=canvas.getContext('2d');
 let mode='dark',animationSpeed=200,data=[];
-const dataStructure=document.getElementById('dataStructure'),langSelect=document.getElementById('langSelect');
-const codeArea=document.getElementById('codeArea'),speedRange=document.getElementById('speedRange');
-const speedLabel=document.getElementById('speedLabel'),userInput=document.getElementById('userInput');
+const dataStructure=document.getElementById('dataStructure'),
+      linkedListType=document.getElementById('linkedListType'),
+      queueType=document.getElementById('queueType'),
+      langSelect=document.getElementById('langSelect'),
+      codeArea=document.getElementById('codeArea'),
+      speedRange=document.getElementById('speedRange'),
+      speedLabel=document.getElementById('speedLabel'),
+      userInput=document.getElementById('userInput');
 
 function resizeCanvas(){canvas.width=canvas.parentElement.clientWidth;canvas.height=canvas.parentElement.clientHeight;drawData();}
 window.addEventListener('resize',resizeCanvas);
 resizeCanvas();
-
 function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
 
 function drawData(highlight=-1){
@@ -61,23 +74,22 @@ function drawData(highlight=-1){
     ctx.textAlign="center"; ctx.textBaseline="middle"; ctx.font="16px monospace";
     const w=50; const h=50; const gap=15;
     if(dataStructure.value==='stack'){
-        let x=canvas.width/2-w/2;
+        let y=canvas.height/2-h/2;
         for(let i=0;i<data.length;i++){
-            let y=canvas.height-(i+1)*(h+gap);
+            let x=20+i*(w+gap);
             ctx.fillStyle=(i===highlight)?'var(--glow)':'#444';
             ctx.fillRect(x,y,w,h);
             ctx.fillStyle=mode==='dark'?'#e2e8f0':'#0f172a';
             ctx.fillText(data[i],x+w/2,y+h/2);
         }
     }else{
-        let startX=20;
+        let startX=20; let startY=canvas.height/2-h/2;
         for(let i=0;i<data.length;i++){
             let x=startX+i*(w+gap);
-            let y=canvas.height/2-h/2;
             ctx.fillStyle=(i===highlight)?'var(--glow)':'#444';
-            ctx.fillRect(x,y,w,h);
+            ctx.fillRect(x,startY,w,h);
             ctx.fillStyle=mode==='dark'?'#e2e8f0':'#0f172a';
-            ctx.fillText(data[i],x+w/2,y+h/2);
+            ctx.fillText(data[i],x+w/2,startY+h/2);
         }
     }
 }
@@ -89,59 +101,72 @@ async function popStack(){if(data.length===0)return; for(let i=data.length-1;i>=
 // --- Queue ---
 async function enqueueQueue(value){data.push(value); for(let i=0;i<data.length;i++){drawData(i); await sleep(animationSpeed);}}
 async function dequeueQueue(){if(data.length===0)return; for(let i=0;i<data.length;i++){drawData(i); await sleep(animationSpeed);} data.shift(); drawData();}
+async function pushDeque(value){data.unshift(value); for(let i=0;i<data.length;i++){drawData(i); await sleep(animationSpeed);}}
+async function popDeque(){if(data.length===0)return; data.shift(); drawData();}
+async function pushCircular(value){data.push(value); for(let i=0;i<data.length;i++){drawData(i); await sleep(animationSpeed);}}
+async function popCircular(){if(data.length===0)return; data.shift(); drawData();}
 
 // --- Linked List ---
 async function insertLinkedList(value){data.push(value); for(let i=0;i<data.length;i++){drawData(i); await sleep(animationSpeed);}}
-async function deleteLinkedList(){if(data.length===0)return; for(let i=data.length-1;i>=0;i--){drawData(i); await sleep(animationSpeed);} data.pop(); drawData();}
+async function deleteLinkedList(){if(data.length===0)return; data.pop(); drawData();}
 
-// --- Button Events ---
+// --- Buttons ---
 document.getElementById('pushBtn').onclick=async()=>{
-    let val=parseInt(userInput.value);
-    if(isNaN(val)) val=Math.floor(Math.random()*50)+1;
+    let val=parseInt(userInput.value); if(isNaN(val)) val=Math.floor(Math.random()*50)+1;
     switch(dataStructure.value){
         case 'stack': await pushStack(val); break;
-        case 'queue': await enqueueQueue(val); break;
+        case 'queue':
+            if(queueType.value==='normal') await enqueueQueue(val);
+            else if(queueType.value==='deque') await pushDeque(val);
+            else if(queueType.value==='circular') await pushCircular(val);
+            break;
         case 'linkedlist': await insertLinkedList(val); break;
     }
     showCode();
 };
-
 document.getElementById('popBtn').onclick=async()=>{
     switch(dataStructure.value){
         case 'stack': await popStack(); break;
-        case 'queue': await dequeueQueue(); break;
+        case 'queue':
+            if(queueType.value==='normal') await dequeueQueue();
+            else if(queueType.value==='deque') await popDeque();
+            else if(queueType.value==='circular') await popCircular();
+            break;
         case 'linkedlist': await deleteLinkedList(); break;
     }
     showCode();
 };
-
 document.getElementById('resetBtn').onclick=()=>{data=[]; drawData();};
-
 document.getElementById('modeBtn').onclick=()=>{mode=mode==='dark'?'light':'dark';document.body.className=mode; drawData();};
-
 speedRange.addEventListener('input',()=>{animationSpeed=1050-speedRange.value; let val=parseInt(speedRange.value); let label='Normal'; if(val<300)label='Slow'; if(val>700)label='Fast'; if(val>900)label='Instant'; speedLabel.textContent='Speed: '+label;});
 
 // --- Code Display ---
 function showCode(){
-    let ds=dataStructure.value,lang=langSelect.value,code='';
-    let val=userInput.value||0;
+    let ds=dataStructure.value,lang=langSelect.value,val=userInput.value||0,code='';
     const codes={
-        stack:{js:`let stack=[];\nstack.push(${val});\nstack.pop();`,
-               cpp:`stack.push(${val});\nstack.pop();`,
-               python:`stack.append(${val})\nstack.pop()`},
-        queue:{js:`let queue=[];\nqueue.push(${val});\nqueue.shift();`,
-               cpp:`queue.push(${val});\nqueue.pop();`,
-               python:`queue.append(${val})\nqueue.pop(0)`},
-        linkedlist:{js:`let list=[];\nlist.push(${val});\nlist.pop();`,
-               cpp:`list.push_back(${val});\nlist.pop_back();`,
-               python:`list.append(${val})\nlist.pop()`},
+        stack:{
+            js:`let stack=[];\nstack.push(${val});\nstack.pop();`,
+            cpp:`stack.push(${val});\nstack.pop();`,
+            python:`stack.append(${val})\nstack.pop()`
+        },
+        queue:{
+            js:`let queue=[];\nqueue.push(${val});\nqueue.shift();`,
+            cpp:`queue.push(${val});\nqueue.pop();`,
+            python:`queue.append(${val})\nqueue.pop(0)`
+        },
+        linkedlist:{
+            js:`let list=[];\nlist.push(${val});\nlist.pop();`,
+            cpp:`list.push_back(${val});\nlist.pop_back();`,
+            python:`list.append(${val})\nlist.pop()`
+        }
     };
     code=codes[ds][lang]||codes[ds]['js'];
     codeArea.innerHTML=`<pre><code class="language-${lang}">${code}</code></pre>`; Prism.highlightAll();
 }
-
 dataStructure.addEventListener('change',showCode);
 langSelect.addEventListener('change',showCode);
+linkedListType.addEventListener('change',showCode);
+queueType.addEventListener('change',showCode);
 
 // --- Init ---
 drawData(); showCode();
