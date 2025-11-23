@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Advanced Search Visualizer</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --sidebar-bg: #1e293b;
+            --text-color: #e2e8f0;
+            --accent-color: #8b5cf6;
+            --accent-hover: #7c3aed;
+            --node-fill: #334155;
+            --node-stroke: #94a3b8;
+            --link-stroke: #475569;
+            --visited-color: #64748b;
+            --frontier-color: #3b82f6;
+            --current-color: #f59e0b;
+            --path-color: #22c55e;
+            --goal-color: #ef4444;
+            --bi-color: #ec4899;
+            /* Color for backward search in Bidirectional */
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            overflow: hidden;
+            display: flex;
+            height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 320px;
+            background-color: var(--sidebar-bg);
+            padding: 20px;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            z-index: 10;
+            overflow-y: auto;
+        }
+
+        .sidebar h1 {
+            font-size: 1.5rem;
+            margin: 0;
+            color: var(--accent-color);
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #cbd5e1;
+        }
+
+        select,
+        button,
+        input[type="range"],
+        input[type="number"] {
+            background-color: var(--bg-color);
+            border: 1px solid var(--link-stroke);
+            color: var(--text-color);
+            padding: 10px;
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 0.9rem;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        select:focus,
+        button:focus,
+        input:focus {
+            border-color: var(--accent-color);
+        }
+
+        button {
+            cursor: pointer;
+            font-weight: 600;
+            background-color: var(--accent-color);
+            border: none;
+        }
+
+        button:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-1px);
+        }
+
+        button.secondary {
+            background-color: var(--node-fill);
+        }
+
+        button.secondary:hover {
+            background-color: var(--link-stroke);
+        }
+
+        .stats {
+            background-color: var(--bg-color);
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            font-size: 0.8rem;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Main Area */
+        .main-area {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            cursor: move;
+        }
+
+        svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .node circle {
+            fill: var(--node-fill);
+            stroke: var(--node-stroke);
+            stroke-width: 2px;
+            transition: fill 0.3s, stroke 0.3s;
+        }
+
+        .node text {
+            fill: var(--text-color);
+            font-size: 12px;
+            font-weight: 600;
+            pointer-events: none;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+        }
+
+        .node text.cost {
+            font-size: 10px;
+            fill: #94a3b8;
+        }
+
+        .link {
+            fill: none;
+            stroke: var(--link-stroke);
+            stroke-width: 1.5px;
+            transition: stroke 0.3s;
+        }
+
+        /* Dynamic Classes */
+        .node.visited circle {
+            fill: var(--visited-color);
+            stroke: var(--visited-color);
+        }
+
+        .node.frontier circle {
+            fill: var(--frontier-color);
+            stroke: var(--frontier-color);
+        }
+
+        .node.current circle {
+            fill: var(--current-color);
+            stroke: #fff;
+            r: 22;
+        }
+
+        .node.path circle {
+            fill: var(--path-color);
+            stroke: var(--path-color);
+        }
+
+        .node.goal circle {
+            fill: var(--goal-color);
+            stroke: #fff;
+        }
+
+        .node.start circle {
+            stroke: var(--path-color);
+            stroke-width: 3px;
+        }
+
+        /* Bidirectional specific */
+        .node.visited-bi circle {
+            fill: var(--bi-color);
+            stroke: var(--bi-color);
+        }
+
+        .node.frontier-bi circle {
+            fill: #f472b6;
+            stroke: #f472b6;
+        }
+
+        .link.path {
+            stroke: var(--path-color);
+            stroke-width: 3px;
+        }
+
+        .link.searched {
+            stroke: var(--visited-color);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="sidebar">
+        <h1>Search Visualizer</h1>
+
+        <div class="control-group">
+            <label>Algorithm</label>
+            <select id="algorithmSelect">
+                <option value="bfs">Breadth-First Search (BFS)</option>
+                <option value="dfs">Depth-First Search (DFS)</option>
+                <option value="dls">Depth-Limited Search (DLS)</option>
+                <option value="iddfs">Iterative Deepening (IDDFS)</option>
+                <option value="bi">Bidirectional Search</option>
+                <option value="ucs">Uniform Cost Search (UCS)</option>
+                <option value="greedy">Greedy Best-First Search</option>
+                <option value="astar">A* Search</option>
+            </select>
+        </div>
+
+        <div class="control-group hidden" id="depthLimitGroup">
+            <label>Depth Limit</label>
+            <input type="number" id="depthLimitInput" value="3" min="1" max="10">
+        </div>
+
+        <div class="control-group">
+            <label>Speed: <span id="speedVal">Fast</span></label>
+            <input type="range" id="speedRange" min="50" max="1000" step="50" value="200" style="direction: rtl;">
+        </div>
+
+        <div class="control-group">
+            <button id="runBtn">Run Search ▶</button>
+            <button id="resetBtn" class="secondary">Reset Visualization</button>
+            <button id="newTreeBtn" class="secondary">Generate New Tree 🎲</button>
+        </div>
+
+        <div class="stats" id="statusBox">
+            Ready to run.<br>
+            Nodes Visited: 0<br>
+            Path Cost: 0
+        </div>
+
+        <div class="legend">
+            <div class="legend-item">
+                <div class="dot" style="background:var(--current-color)"></div>Current
+            </div>
+            <div class="legend-item">
+                <div class="dot" style="background:var(--frontier-color)"></div>Frontier
+            </div>
+            <div class="legend-item">
+                <div class="dot" style="background:var(--visited-color)"></div>Visited
+            </div>
+            <div class="legend-item">
+                <div class="dot" style="background:var(--bi-color)"></div>Backward (Bi)
+            </div>
+            <div class="legend-item">
+                <div class="dot" style="background:var(--path-color)"></div>Path
+            </div>
+            <div class="legend-item">
+                <div class="dot" style="background:var(--goal-color)"></div>Goal
+            </div>
+        </div>
+    </div>
+
+    <div class="main-area" id="mainArea">
+        <svg id="treeSvg"></svg>
+    </div>
+
+    <script>
+        // --- Configuration ---
+        const width = window.innerWidth - 320;
+        const height = window.innerHeight;
+        const nodeRadius = 18;
+        let animationSpeed = 200;
+
+        // --- State ---
+        let treeData = null;
+        let rootNode = null;
+        let nodes = [];
+        let links = [];
+        let goalNodeId = null;
+
+        // --- D3 Setup ---
+        const svg = d3.select("#treeSvg")
+            .attr("width", "100%")
+            .attr("height", "100%")
+            .call(d3.zoom().on("zoom", (e) => g.attr("transform", e.transform)));
+
+        const g = svg.append("g").attr("transform", "translate(50, 50)");
+
+        // --- Tree Generation ---
+        function generateTree(depth = 5, branchingFactor = 3) {
+            let idCounter = 0;
+
+            function createNode(currentDepth) {
+                const node = {
+                    id: idCounter++,
+                    name: String.fromCharCode(65 + (idCounter % 26)) + (Math.floor(idCounter / 26) || ""),
+                    children: [],
+                    value: Math.floor(Math.random() * 10) + 1, // Heuristic/Cost value
+                    depth: currentDepth
+                };
+
+                if (currentDepth < depth) {
+                    const numChildren = Math.floor(Math.random() * branchingFactor) + 1;
+                    for (let i = 0; i < numChildren; i++) {
+                        if (Math.random() > 0.15) { // 15% chance to stop branch early
+                            node.children.push(createNode(currentDepth + 1));
+                        }
+                    }
+                }
+                return node;
+            }
+
+            treeData = createNode(0);
+
+            // Ensure at least one deep node
+            if (treeData.children.length === 0) treeData = generateTree(depth, branchingFactor);
+
+            updateLayout();
+            pickGoal();
+        }
+
+        function updateLayout() {
+            const treeLayout = d3.tree().size([height - 100, width - 200]);
+            rootNode = d3.hierarchy(treeData);
+            treeLayout(rootNode);
+
+            nodes = rootNode.descendants();
+            links = rootNode.links();
+
+            render();
+        }
+
+        function pickGoal() {
+            const leaves = nodes.filter(d => !d.children);
+            const randomLeaf = leaves[Math.floor(Math.random() * leaves.length)];
+            goalNodeId = randomLeaf.data.id;
+            render();
+        }
+
+        // --- Rendering ---
+        function render() {
+            g.selectAll("*").remove();
+
+            // Links
+            g.selectAll(".link")
+                .data(links)
+                .enter().append("path")
+                .attr("class", "link")
+                .attr("id", d => `link-${d.target.data.id}`)
+                .attr("d", d3.linkHorizontal()
+                    .x(d => d.y)
+                    .y(d => d.x)
+                );
+
+            // Nodes
+            const nodeGroup = g.selectAll(".node")
+                .data(nodes)
+                .enter().append("g")
+                .attr("class", d => {
+                    let c = "node";
+                    if (d.data.id === 0) c += " start";
+                    if (d.data.id === goalNodeId) c += " goal";
+                    return c;
+                })
+                .attr("id", d => `node-${d.data.id}`)
+                .attr("transform", d => `translate(${d.y},${d.x})`);
+
+            nodeGroup.append("circle")
+                .attr("r", nodeRadius);
+
+            nodeGroup.append("text")
+                .attr("dy", 4)
+                .attr("text-anchor", "middle")
+                .text(d => d.data.name);
+
+            nodeGroup.append("text")
+                .attr("class", "cost")
+                .attr("dy", 24)
+                .attr("text-anchor", "middle")
+                .text(d => d.data.value);
+        }
+
+        // --- Algorithms ---
+        async function runSearch() {
+            resetVisuals();
+            const algo = document.getElementById("algorithmSelect").value;
+            const startNode = nodes.find(n => n.data.id === 0);
+            const goalNode = nodes.find(n => n.data.id === goalNodeId);
+            const depthLimit = parseInt(document.getElementById("depthLimitInput").value) || 3;
+
+            if (!startNode || !goalNode) return;
+
+            let path = [];
+            let visitedOrder = []; // Array of {node, type: 'normal'|'bi-back'}
+
+            const getNeighbors = (node) => node.children || [];
+
+            // --- BFS ---
+            if (algo === 'bfs') {
+                let queue = [startNode];
+                let visited = new Set([startNode.data.id]);
+                let parentMap = new Map();
+
+                while (queue.length > 0) {
+                    let current = queue.shift();
+                    visitedOrder.push({ node: current, type: 'normal' });
+
+                    if (current.data.id === goalNode.data.id) break;
+
+                    for (let child of getNeighbors(current)) {
+                        if (!visited.has(child.data.id)) {
+                            visited.add(child.data.id);
+                            parentMap.set(child.data.id, current);
+                            queue.push(child);
+                        }
+                    }
+                }
+                path = reconstructPath(parentMap, goalNode);
+            }
+
+            // --- DFS ---
+            else if (algo === 'dfs') {
+                let stack = [startNode];
+                let visited = new Set();
+                let parentMap = new Map();
+
+                while (stack.length > 0) {
+                    let current = stack.pop();
+                    if (visited.has(current.data.id)) continue;
+
+                    visited.add(current.data.id);
+                    visitedOrder.push({ node: current, type: 'normal' });
+
+                    if (current.data.id === goalNode.data.id) break;
+
+                    const children = getNeighbors(current);
+                    for (let i = children.length - 1; i >= 0; i--) {
+                        let child = children[i];
+                        if (!visited.has(child.data.id)) {
+                            parentMap.set(child.data.id, current);
+                            stack.push(child);
+                        }
+                    }
+                }
+                path = reconstructPath(parentMap, goalNode);
+            }
+
+            // --- DLS (Depth-Limited Search) ---
+            else if (algo === 'dls') {
+                let stack = [{ node: startNode, depth: 0 }];
+                let visited = new Set(); // Note: DLS visited logic is tricky with cycles, but tree is acyclic
+                let parentMap = new Map();
+
+                while (stack.length > 0) {
+                    let { node: current, depth } = stack.pop();
+
+                    // Allow re-visiting at different depths if needed, but for tree simple visited check is ok-ish
+                    // Actually for DLS on trees we don't strictly need visited set if we don't have cycles
+                    // But to show "visited" color we track it.
+
+                    visitedOrder.push({ node: current, type: 'normal' });
+
+                    if (current.data.id === goalNode.data.id) break;
+
+                    if (depth < depthLimit) {
+                        const children = getNeighbors(current);
+                        for (let i = children.length - 1; i >= 0; i--) {
+                            let child = children[i];
+                            parentMap.set(child.data.id, current);
+                            stack.push({ node: child, depth: depth + 1 });
+                        }
+                    }
+                }
+                // Only reconstruct if we actually found it
+                if (visitedOrder[visitedOrder.length - 1].node.data.id === goalNode.data.id) {
+                    path = reconstructPath(parentMap, goalNode);
+                }
+            }
+
+            // --- IDDFS (Iterative Deepening) ---
+            else if (algo === 'iddfs') {
+                // We will simulate IDDFS by running DLS multiple times
+                // For visualization, we push a "reset" marker or just append to visitedOrder
+
+                for (let limit = 0; limit <= 10; limit++) { // Hard cap 10 for safety
+                    visitedOrder.push({ type: 'message', text: `Depth Limit: ${limit}` });
+
+                    let stack = [{ node: startNode, depth: 0 }];
+                    let parentMap = new Map();
+                    let found = false;
+
+                    // We need to track visited for *this iteration* to avoid loops if graph, 
+                    // but for tree it's fine. We'll track to color nodes.
+
+                    while (stack.length > 0) {
+                        let { node: current, depth } = stack.pop();
+
+                        visitedOrder.push({ node: current, type: 'normal' });
+
+                        if (current.data.id === goalNode.data.id) {
+                            found = true;
+                            path = reconstructPath(parentMap, goalNode);
+                            break;
+                        }
+
+                        if (depth < limit) {
+                            const children = getNeighbors(current);
+                            for (let i = children.length - 1; i >= 0; i--) {
+                                let child = children[i];
+                                parentMap.set(child.data.id, current);
+                                stack.push({ node: child, depth: depth + 1 });
+                            }
+                        }
+                    }
+
+                    if (found) break;
+
+                    // Add a "clear" step to visualizer to reset colors for next iteration
+                    visitedOrder.push({ type: 'clear' });
+                }
+            }
+
+            // --- Bidirectional Search ---
+            else if (algo === 'bi') {
+                // BFS from Start
+                let qStart = [startNode];
+                let visitedStart = new Map(); // id -> parent
+                visitedStart.set(startNode.data.id, null);
+
+                // BFS from Goal (using parent pointers as children for tree? No, tree is directed down usually)
+                // In this visualization, links are undirected for Bidirectional?
+                // Standard trees are directed. If we treat as undirected graph:
+                // Parent pointer in D3 hierarchy gives us the "up" direction.
+
+                let qGoal = [goalNode];
+                let visitedGoal = new Map(); // id -> parent (where parent is next step to goal)
+                visitedGoal.set(goalNode.data.id, null);
+
+                let intersectionNode = null;
+
+                while (qStart.length > 0 && qGoal.length > 0) {
+                    // Expand Start
+                    if (qStart.length > 0) {
+                        let currS = qStart.shift();
+                        visitedOrder.push({ node: currS, type: 'normal' });
+
+                        // Check intersection
+                        if (visitedGoal.has(currS.data.id)) {
+                            intersectionNode = currS;
+                            break;
+                        }
+
+                        // Neighbors: children + parent (undirected)
+                        let neighbors = [...getNeighbors(currS)];
+                        if (currS.parent) neighbors.push(currS.parent);
+
+                        for (let neighbor of neighbors) {
+                            if (!visitedStart.has(neighbor.data.id)) {
+                                visitedStart.set(neighbor.data.id, currS);
+                                qStart.push(neighbor);
+                            }
+                        }
+                    }
+
+                    // Expand Goal
+                    if (qGoal.length > 0) {
+                        let currG = qGoal.shift();
+                        visitedOrder.push({ node: currG, type: 'bi-back' });
+
+                        // Check intersection
+                        if (visitedStart.has(currG.data.id)) {
+                            intersectionNode = currG;
+                            break;
+                        }
+
+                        // Neighbors: children + parent
+                        let neighbors = [...getNeighbors(currG)];
+                        if (currG.parent) neighbors.push(currG.parent);
+
+                        for (let neighbor of neighbors) {
+                            if (!visitedGoal.has(neighbor.data.id)) {
+                                visitedGoal.set(neighbor.data.id, currG);
+                                qGoal.push(neighbor);
+                            }
+                        }
+                    }
+                }
+
+                if (intersectionNode) {
+                    // Reconstruct path: Start -> Intersect -> Goal
+                    // Path from Start
+                    let curr = intersectionNode;
+                    while (curr) {
+                        path.unshift(curr);
+                        curr = visitedStart.get(curr.data.id);
+                    }
+
+                    // Path from Goal (append)
+                    curr = visitedGoal.get(intersectionNode.data.id);
+                    while (curr) {
+                        path.push(curr);
+                        curr = visitedGoal.get(curr.data.id);
+                    }
+                }
+            }
+
+            // --- UCS ---
+            else if (algo === 'ucs') {
+                let pq = [{ node: startNode, cost: 0 }];
+                let visited = new Set();
+                let parentMap = new Map();
+                let costMap = new Map();
+                costMap.set(startNode.data.id, 0);
+
+                while (pq.length > 0) {
+                    pq.sort((a, b) => a.cost - b.cost);
+                    let { node: current, cost } = pq.shift();
+
+                    if (visited.has(current.data.id)) continue;
+                    visited.add(current.data.id);
+                    visitedOrder.push({ node: current, type: 'normal' });
+
+                    if (current.data.id === goalNode.data.id) break;
+
+                    for (let child of getNeighbors(current)) {
+                        let newCost = cost + child.data.value;
+                        if (!visited.has(child.data.id)) {
+                            if (!costMap.has(child.data.id) || newCost < costMap.get(child.data.id)) {
+                                costMap.set(child.data.id, newCost);
+                                parentMap.set(child.data.id, current);
+                                pq.push({ node: child, cost: newCost });
+                            }
+                        }
+                    }
+                }
+                path = reconstructPath(parentMap, goalNode);
+            }
+
+            // --- Greedy ---
+            else if (algo === 'greedy') {
+                let pq = [{ node: startNode, h: heuristic(startNode, goalNode) }];
+                let visited = new Set();
+                let parentMap = new Map();
+
+                while (pq.length > 0) {
+                    pq.sort((a, b) => a.h - b.h);
+                    let { node: current } = pq.shift();
+
+                    if (visited.has(current.data.id)) continue;
+                    visited.add(current.data.id);
+                    visitedOrder.push({ node: current, type: 'normal' });
+
+                    if (current.data.id === goalNode.data.id) break;
+
+                    for (let child of getNeighbors(current)) {
+                        if (!visited.has(child.data.id)) {
+                            parentMap.set(child.data.id, current);
+                            pq.push({ node: child, h: heuristic(child, goalNode) });
+                        }
+                    }
+                }
+                path = reconstructPath(parentMap, goalNode);
+            }
+
+            // --- A* ---
+            else if (algo === 'astar') {
+                let pq = [{ node: startNode, g: 0, f: 0 }];
+                let visited = new Set();
+                let parentMap = new Map();
+                let gScore = new Map();
+                gScore.set(startNode.data.id, 0);
+
+                while (pq.length > 0) {
+                    pq.sort((a, b) => a.f - b.f);
+                    let { node: current } = pq.shift();
+
+                    if (visited.has(current.data.id)) continue;
+                    visited.add(current.data.id);
+                    visitedOrder.push({ node: current, type: 'normal' });
+
+                    if (current.data.id === goalNode.data.id) break;
+
+                    for (let child of getNeighbors(current)) {
+                        let tentativeG = gScore.get(current.data.id) + child.data.value;
+
+                        if (!gScore.has(child.data.id) || tentativeG < gScore.get(child.data.id)) {
+                            parentMap.set(child.data.id, current);
+                            gScore.set(child.data.id, tentativeG);
+                            let f = tentativeG + heuristic(child, goalNode);
+                            pq.push({ node: child, g: tentativeG, f: f });
+                        }
+                    }
+                }
+                path = reconstructPath(parentMap, goalNode);
+            }
+
+            await visualize(visitedOrder, path);
+        }
+
+        function heuristic(node, goal) {
+            return Math.abs(node.depth - goal.depth) * 10;
+        }
+
+        function reconstructPath(parentMap, goal) {
+            let path = [];
+            let curr = goal;
+            while (curr) {
+                path.unshift(curr);
+                curr = parentMap.get(curr.data.id);
+            }
+            if (path.length > 0 && path[0].data.id === 0) return path;
+            return [];
+        }
+
+        // --- Visualization Loop ---
+        async function visualize(visitedOrder, path) {
+            const statusBox = document.getElementById("statusBox");
+            let visitedCount = 0;
+
+            document.getElementById("runBtn").disabled = true;
+            document.getElementById("newTreeBtn").disabled = true;
+
+            for (let item of visitedOrder) {
+                if (item.type === 'clear') {
+                    // Soft reset for IDDFS
+                    d3.selectAll(".node").classed("visited", false).classed("current", false);
+                    d3.selectAll(".link").classed("searched", false);
+                    await sleep(animationSpeed * 2);
+                    continue;
+                }
+
+                if (item.type === 'message') {
+                    statusBox.innerHTML = `${item.text}<br>Nodes Visited: ${visitedCount}`;
+                    await sleep(animationSpeed);
+                    continue;
+                }
+
+                const node = item.node;
+                visitedCount++;
+
+                // Highlight
+                const nodeEl = d3.select(`#node-${node.data.id}`);
+                nodeEl.classed("current", true);
+                if (item.type === 'bi-back') nodeEl.classed("visited-bi", true);
+
+                statusBox.innerHTML = `Running...<br>Nodes Visited: ${visitedCount}`;
+
+                await sleep(animationSpeed);
+
+                nodeEl.classed("current", false);
+                if (item.type !== 'bi-back') nodeEl.classed("visited", true);
+
+                // Highlight link
+                if (node.parent && item.type !== 'bi-back') {
+                    d3.select(`#link-${node.data.id}`).classed("searched", true);
+                }
+            }
+
+            // Animate Path
+            if (path.length > 0) {
+                statusBox.innerHTML += `<br><strong>Goal Found!</strong> Path length: ${path.length}`;
+                for (let node of path) {
+                    d3.select(`#node-${node.data.id}`).classed("path", true);
+                    if (node.parent) {
+                        // Check if link exists (might be reverse for Bi-search)
+                        const link = d3.select(`#link-${node.data.id}`);
+                        if (!link.empty()) link.classed("path", true);
+                    }
+                    await sleep(animationSpeed / 2);
+                }
+            } else {
+                statusBox.innerHTML += `<br><strong>Goal Not Found.</strong>`;
+            }
+
+            document.getElementById("runBtn").disabled = false;
+            document.getElementById("newTreeBtn").disabled = false;
+        }
+
+        function resetVisuals() {
+            d3.selectAll(".node")
+                .classed("visited", false)
+                .classed("current", false)
+                .classed("path", false)
+                .classed("frontier", false)
+                .classed("visited-bi", false);
+            d3.selectAll(".link")
+                .classed("searched", false)
+                .classed("path", false);
+            document.getElementById("statusBox").innerHTML = "Ready to run.<br>Nodes Visited: 0";
+        }
+
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        // --- Event Listeners ---
+        document.getElementById("runBtn").onclick = runSearch;
+        document.getElementById("resetBtn").onclick = resetVisuals;
+        document.getElementById("newTreeBtn").onclick = () => {
+            resetVisuals();
+            generateTree();
+        };
+        document.getElementById("speedRange").oninput = (e) => {
+            animationSpeed = 1050 - e.target.value;
+            const val = parseInt(e.target.value);
+            let label = "Normal";
+            if (val < 300) label = "Slow";
+            if (val > 700) label = "Fast";
+            if (val > 900) label = "Instant";
+            document.getElementById("speedVal").textContent = label;
+        };
+
+        document.getElementById("algorithmSelect").onchange = (e) => {
+            const val = e.target.value;
+            const depthGroup = document.getElementById("depthLimitGroup");
+            if (val === 'dls') {
+                depthGroup.classList.remove("hidden");
+            } else {
+                depthGroup.classList.add("hidden");
+            }
+        };
+
+        // --- Init ---
+        generateTree();
+
+    </script>
+</body>
+
+</html>
