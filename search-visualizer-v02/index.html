@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Search Visualizer</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css"/>
+<style>
+:root{--bg-dark:#0f172a;--panel-dark:#0b1220;--text-dark:#e2e8f0;--muted-dark:#94a3b8;--accent:#8b5cf6;--glow:#22c55e;}
+:root{--bg-light:#f8fafc;--panel-light:#ffffff;--text-light:#0f172a;--muted-light:#475569;--glow:#16a34a;}
+body.dark{--bg:var(--bg-dark);--panel:var(--panel-dark);--text:var(--text-dark);--muted:var(--muted-dark);--glow:#22c55e;}
+body.light{--bg:var(--bg-light);--panel:var(--panel-light);--text:var(--text-light);--muted:var(--muted-light);--glow:#16a34a;}
+body{margin:0;font-family:Inter,sans-serif;background:var(--bg);color:var(--text);transition:all 0.3s;display:flex;flex-direction:column;align-items:center;padding:12px;}
+.controls{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0;}
+select,input,button{padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,.06);background:transparent;color:var(--text);transition:all 0.3s;}
+button{cursor:pointer;background:linear-gradient(90deg,var(--accent),#7c3aed);border:none;transition:all 0.3s;}
+button:hover{transform:scale(1.05);}
+#canvasWrap{width:100%;max-width:1000px;height:400px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.04));border-radius:8px;display:flex;align-items:flex-end;justify-content:center;}
+canvas{width:100%;height:100%;}
+#codeArea{width:100%;max-width:1000px;height:250px;overflow:auto;background:var(--panel);padding:12px;border-radius:8px;font-family:monospace;white-space:pre;}
+#userInput{width:300px;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,.1);background:var(--panel);color:var(--text);}
+#targetInput{width:120px;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,.1);background:var(--panel);color:var(--text);}
+</style>
+</head>
+<body class="dark">
+
+<div class="controls">
+<input type="text" id="userInput" placeholder="Enter numbers e.g. 5,3,8,1">
+<input type="number" id="targetInput" placeholder="Target">
+<select id="searchAlgo">
+<option value="linear">Linear Search</option>
+<option value="binary">Binary Search</option>
+</select>
+<select id="langSelect"><option value="js">JavaScript</option><option value="cpp">C++</option><option value="python">Python</option></select>
+<input type="range" id="speedRange" min="50" max="1000" step="50" value="200"><span id="speedLabel">Speed: Normal</span>
+<button id="runBtn">Run</button>
+<button id="newBtn">New Array</button>
+<button id="resetBtn">Reset</button>
+<button id="modeBtn">Toggle Mode</button>
+</div>
+
+<div id="canvasWrap"><canvas id="searchCanvas"></canvas></div>
+<div id="codeArea"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script>
+const canvas=document.getElementById('searchCanvas'),ctx=canvas.getContext('2d');
+let mode='dark',animationSpeed=200,data=[];
+const searchAlgo=document.getElementById('searchAlgo'),langSelect=document.getElementById('langSelect');
+const codeArea=document.getElementById('codeArea'),speedRange=document.getElementById('speedRange');
+const speedLabel=document.getElementById('speedLabel');
+const userInput=document.getElementById('userInput'),targetInput=document.getElementById('targetInput');
+
+function resizeCanvas(){canvas.width=canvas.parentElement.clientWidth;canvas.height=canvas.parentElement.clientHeight;drawArray();}
+window.addEventListener('resize',resizeCanvas);
+resizeCanvas();
+
+function parseInput(){ 
+  let vals=userInput.value.split(/[, ]+/).map(Number).filter(n=>!isNaN(n));
+  if(vals.length>0) data=vals; else randArray(); 
+}
+function randArray(n=15){data=[];for(let i=0;i<n;i++)data.push(Math.floor(Math.random()*50)+1);}
+function drawArray(highlight=-1){ctx.clearRect(0,0,canvas.width,canvas.height);const w=canvas.width/data.length-10;for(let i=0;i<data.length;i++){ctx.fillStyle=(i===highlight)?'var(--glow)':(mode==='dark'?'#222':'#444');ctx.fillRect(i*(w+8)+20,canvas.height-20-data[i]*5,w,data[i]*5);ctx.fillStyle=mode==='dark'?'#e2e8f0':'#0f172a';ctx.fillText(data[i],i*(w+8)+20,canvas.height-25-data[i]*5);}}
+function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
+
+// --- Search Animations ---
+async function animateLinear(target){for(let i=0;i<data.length;i++){drawArray(i); await sleep(animationSpeed); if(data[i]===target){drawArray(i); break;}}}
+async function animateBinary(target){data.sort((a,b)=>a-b);let l=0,r=data.length-1; while(l<=r){let m=Math.floor((l+r)/2); drawArray(m); await sleep(animationSpeed); if(data[m]===target) break; else if(data[m]<target) l=m+1; else r=m-1;}}
+
+// --- Animate selected algo ---
+async function animateAlgo(){parseInput();let target=parseInt(targetInput.value); if(isNaN(target)) target=data[0]; switch(searchAlgo.value){
+    case 'linear': await animateLinear(target); break;
+    case 'binary': await animateBinary(target); break;
+} showCode();}
+
+// --- Code display ---
+function showCode(){
+  let algo=searchAlgo.value,lang=langSelect.value,code='';
+  const codes={
+    linear:{js:`function linearSearch(arr,target){for(let i=0;i<arr.length;i++){if(arr[i]===target)return i;}}`,
+            cpp:`int linearSearch(vector<int>& arr,int target){for(int i=0;i<arr.size();i++){if(arr[i]==target)return i;}}`,
+            python:`def linear_search(arr,target):\n for i in range(len(arr)):\n  if arr[i]==target: return i`},
+    binary:{js:`function binarySearch(arr,target){arr.sort((a,b)=>a-b);let l=0,r=arr.length-1;while(l<=r){let m=Math.floor((l+r)/2);if(arr[m]===target)return m;else if(arr[m]<target) l=m+1;else r=m-1;}}`,
+            cpp:`int binarySearch(vector<int>& arr,int target){sort(arr.begin(),arr.end());int l=0,r=arr.size()-1;while(l<=r){int m=(l+r)/2;if(arr[m]==target)return m;else if(arr[m]<target) l=m+1; else r=m-1;}}`,
+            python:`def binary_search(arr,target):\n arr.sort()\n l,r=0,len(arr)-1\n while l<=r:\n  m=(l+r)//2\n  if arr[m]==target: return m\n  elif arr[m]<target: l=m+1\n  else: r-=1`},
+  };
+  if(codes[algo]) code=codes[algo][lang]||codes[algo]['js'];
+  codeArea.innerHTML=`<pre><code class="language-${lang}">${code}</code></pre>`;Prism.highlightAll();
+}
+
+// --- Event listeners ---
+searchAlgo.addEventListener('change',showCode);
+langSelect.addEventListener('change',showCode);
+speedRange.addEventListener('input',()=>{animationSpeed=1050-speedRange.value; let val=parseInt(speedRange.value); let label='Normal'; if(val<300)label='Slow'; if(val>700)label='Fast'; if(val>900)label='Instant'; speedLabel.textContent='Speed: '+label;});
+document.getElementById('modeBtn').onclick=()=>{mode=mode==='dark'?'light':'dark';document.body.className=mode; drawArray();};
+document.getElementById('newBtn').onclick=()=>{randArray();drawArray();};
+document.getElementById('resetBtn').onclick=()=>{data=[];drawArray();};
+document.getElementById('runBtn').onclick=animateAlgo;
+
+// --- Init ---
+randArray(); drawArray(); showCode();
+</script>
+</body>
+</html>
